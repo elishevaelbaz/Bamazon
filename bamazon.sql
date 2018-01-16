@@ -20,7 +20,8 @@ VALUES ("Lego", "Toys and Games", 25.95, 3000), ("Toilet Paper", "Health & House
 
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("HP ink", "Office Products", 35.21, 70), ("White Noise Machine", "Health &Household", 49.99, 150),
+VALUES ("HP ink", "Office Products", 35.21, 70), ("White Noise Machine", "Health & Household", 49.99, 150),
 ("Hot Glue Gun", "Arts & Crafts", 12.85, 333), ("Inflatable Kayak", "Outdoor Recreation", 94.95, 10),
 ("Tennis Balls", "Sports & Outdoors", 6.96, 475), ("Batman Costume", "Toys and Games", 28.71, 56), 
-("Bath Mat", "Home & Kitchen", 12.87, 675), ("Tambourine", "Musical Instruments", 14.99, 7000)
+("Bath Mat", "Home & Kitchen", 12.87, 675), ("Tambourine", "Musical Instruments", 14.99, 7000),
+("Nintendo Switch", "Electronics", 299.99, 5);

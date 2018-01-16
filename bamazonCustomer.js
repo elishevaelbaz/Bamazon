@@ -66,7 +66,7 @@ function readProducts() {
    		}
       // if input is a number but not from 1-10
       else if (parseInt(input) < 1 || parseInt(input) > productArr.length){
-      	return "Please enter a number between 1 and the number of items in the table"
+      	return "Please enter a number between 1 and " + productArr.length
       }
       // otherwise
       return true;
@@ -114,19 +114,10 @@ function readProducts() {
 			
 		else{
 			console.log("Insufficient quantity! Your order cannot be filled.")
-			//insufficient quantity - do nothing
-			connection.end();
+			exitOrCont();
 		}
 
-		console.log(price)
-
-		console.log(id +"id " + id)
-		console.log(id == 1);
-		console.log(id ===1)
-
-
-
-		});
+	});
  }
 
  function updateProduct() {
@@ -142,14 +133,30 @@ function readProducts() {
     ],
     function(err, res) {
       console.log(res.affectedRows + " products updated!\n");
-      
+      exitOrCont();
     }
   );
 
   // logs the actual query being run
   console.log(query.sql);
-
-  connection.end();
+  
 }
 
+function exitOrCont() {
+	inquirer.prompt([
+		{
+			type: "confirm",
+    	message: "Would you like to buy something else?",
+    	name: "again"
+  	}
+		]).then(answer => {
+
+			if (answer.again){
+				promptUser();
+			}
+			else{	
+				connection.end();	
+			}
+});
+}
 
