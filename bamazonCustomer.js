@@ -16,7 +16,6 @@ var productArr = [];
 connection.connect(function(err) {
   if (err) throw err;
   readProducts();
-  // promptUser();
 });
 
 function readProducts() {
