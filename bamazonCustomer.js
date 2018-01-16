@@ -10,7 +10,7 @@ var connection = mysql.createConnection({
   database: "bamazon_db"
 });
 
-var itemArr = [];
+// var itemArr = [];
 // to store the items in the database
 var productArr = [];
 
@@ -20,7 +20,6 @@ var id;
 
 connection.connect(function(err) {
   if (err) throw err;
-  console.log("connected as id " + connection.threadId + "\n");
   readProducts();
   // promptUser();
 });
@@ -32,12 +31,16 @@ function readProducts() {
     if (err) throw err;
 
     //clear out the itemArr
-    itemArr = [];
+    // itemArr = [];
     productArr = res;
 
+    console.log("item_id   product_name              price")
+    console.log("-----------------------------------------")
     for (var i = 0; i < res.length; i++) {
-      console.log(res[i].item_id + " " + res[i].product_name)
-    	itemArr.push(res[i].item_id + " " + res[i].product_name)
+    	// var numSpaces = 5 - (i+1) / 10;
+    	// console.log(numSpaces)
+      console.log("  " + res[i].item_id + " ".repeat(9 - res[i].item_id.toString().length) + res[i].product_name + " ".repeat(25-res[i].product_name.length) +  res[i].price)
+    	// itemArr.push(res[i].item_id + " " + res[i].product_name)
     }
 
     // console.log(res);
@@ -50,20 +53,45 @@ function readProducts() {
 
 	inquirer.prompt([
 		{
-			type: "list",
-      message: "Which item would you like to buy?",
+			type: "input",
+      message: "\nPlease enter the id of the item you would like to buy.",
       name: "item",
-      choices: itemArr
+      // choices: itemArr,
+
+      validate: function (input) {
+
+   		// if input is not a number
+   		if (isNaN(input)) {
+   			return "Please enter a valid number";
+   		}
+      // if input is a number but not from 1-10
+      else if (parseInt(input) < 1 || parseInt(input) > productArr.length){
+      	return "Please enter a number between 1 and the number of items in the table"
+      }
+      // otherwise
+      return true;
+    	}
 		},
 		{
 			type: "input",
       message: "How many units would you like to buy?",
-      name: "amount"
+      name: "amount",
+
+      validate: function (input) {
+
+   		// if input is not a number
+   		if (isNaN(input)) {
+   			return "Please enter a valid number";
+   		}
+      // otherwise
+      return true;
+    	}
 		}
 	]).then(ans => {
 		
 
-		id = ans.item.substr(0, ans.item.indexOf(' '));
+		// id = ans.item.substr(0, ans.item.indexOf(' '));
+		id = ans.item;
 
 		//the index will be one less than the id
 		
@@ -71,19 +99,23 @@ function readProducts() {
 		if (productArr[id-1].stock_quantity >= ans.amount){
 			//calculate what the new quantity will be
 			newQuantity = productArr[id-1].stock_quantity - ans.amount;
-			//update sql database
-			updateProduct();
+			
 				
 			//show the total cost
 			var price = productArr[id-1].price;
 			var totalPrice = price * ans.amount;
 
-	console.log("total cost: $" + totalPrice)
+	console.log("total cost: $" + totalPrice.toFixed(2))
+
+	//update sql database
+			updateProduct();
+
 		}
 			
 		else{
-			console.log("Insufficient quantity! Your order cannot be filled")
+			console.log("Insufficient quantity! Your order cannot be filled.")
 			//insufficient quantity - do nothing
+			connection.end();
 		}
 
 		console.log(price)
@@ -91,6 +123,8 @@ function readProducts() {
 		console.log(id +"id " + id)
 		console.log(id == 1);
 		console.log(id ===1)
+
+
 
 		});
  }
@@ -114,6 +148,8 @@ function readProducts() {
 
   // logs the actual query being run
   console.log(query.sql);
+
+  connection.end();
 }
 
 

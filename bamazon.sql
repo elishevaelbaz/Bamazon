@@ -13,15 +13,14 @@ CREATE TABLE products (
   PRIMARY KEY (item_id)
 );
 
-INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Harry Potter", "books", 20.00, 10000);
 
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("lego", "toys", 30.00, 3000), ("toilet paper", "Household", 8.00, 50000);
+VALUES ("Lego", "Toys and Games", 25.95, 3000), ("Toilet Paper", "Health & Household", 7.75, 50000);
 
 
-
--- ### Alternative way to insert more than one row
--- INSERT INTO products (flavor, price, quantity)
--- VALUES ("vanilla", 2.50, 100), ("chocolate", 3.10, 120), ("strawberry", 3.25, 75);
+INSERT INTO products (product_name, department_name, price, stock_quantity)
+VALUES ("HP ink", "Office Products", 35.21, 70), ("White Noise Machine", "Health &Household", 49.99, 150),
+("Hot Glue Gun", "Arts & Crafts", 12.85, 333), ("Inflatable Kayak", "Outdoor Recreation", 94.95, 10),
+("Tennis Balls", "Sports & Outdoors", 6.96, 475), ("Batman Costume", "Toys and Games", 28.71, 56), 
+("Bath Mat", "Home & Kitchen", 12.87, 675), ("Tambourine", "Musical Instruments", 14.99, 7000)
