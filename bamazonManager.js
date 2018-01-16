@@ -20,9 +20,7 @@ var objArr = [];
 connection.connect(function(err) {
   if (err) throw err;
   promptManager();
-  // promptUser();
 });
-
 
 function promptManager(){
 
