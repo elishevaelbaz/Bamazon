@@ -49,7 +49,7 @@ function readProducts() {
    		if (isNaN(input)) {
    			return " Please enter a valid number";
    		}
-      // if input is a number but not from 1-10
+      // check that the number is between 1 and the length of the list
       else if (parseInt(input) < 1 || parseInt(input) > productArr.length){
       	return " Please enter a number between 1 and " + productArr.length
       }

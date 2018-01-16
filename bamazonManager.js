@@ -27,7 +27,7 @@ function promptManager(){
 	inquirer.prompt([
 		{
 			type: "list",
-      message: "\nWhat would you like to do?",
+      message: "\n What would you like to do?",
       name: "menu",
       choices: ["View Products for Sale", "View Low Inventory", "Add to Inventory", "Add New Product", "Exit"]
 		}
@@ -60,22 +60,20 @@ function promptManager(){
  	}
 
 function readProducts(){
-	console.log("here")
+	// get the most recent table
 	var query = connection.query("SELECT * FROM products", function(err, res) {
     
     if (err) throw err;
 
-    console.log("now here")
-
+    //store the data in arrays
     itemArr = [];
     objArr = [];
     for (var i = 0; i < res.length; i++) {
     	itemArr.push(res[i].product_name);
     	objArr.push(res[i]);
     }
-    console.log(itemArr)
-    console.log(objArr)
 
+    // prompt and update inventory
     updateInventory();
   })
 
@@ -109,12 +107,10 @@ function lowInventory(){
     "SELECT product_name, stock_quantity FROM products WHERE stock_quantity <= 5",
     
     function(err, res) {
-      // console.log(res.affectedRows + " products updated!\n");
-      // Call deleteProduct AFTER the UPDATE completes
       // instantiate 
 		var table = new Table({
     head: ['Product', 'Quantity']
-  	, colWidths: [22,10]
+  	, colWidths: [22, 10]
 		});
  
 		for (var i = 0; i < res.length; i++) {
@@ -123,19 +119,14 @@ function lowInventory(){
 			);
  		} 
  		console.log(table.toString());
-
       
-      promptManager();
+    promptManager();
       
     }
   );
 }
 
 function updateInventory(){
-
-	
-	console.log("hi " + itemArr)
-	console.log(objArr)
 
 	inquirer.prompt([
 		{	
@@ -146,7 +137,7 @@ function updateInventory(){
 		},
 		{
 			type: "input",
-      message: "\nHow many units would you like to add?",
+      message: "\n How many units would you like to add?",
       name: "num",
       // choices: itemArr,
 
@@ -156,44 +147,32 @@ function updateInventory(){
    		if (isNaN(input)) {
    			return "Please enter a valid number";
    		}
-      // if input is a number but not from 1-10
-      else if (parseInt(input) < 1 || parseInt(input) > objArr.length){
-      	return "Please enter a number between 1 and the number of items in the table"
-      }
       // otherwise
       return true;
     	}
 		}
-		]).then(answers => {
+	]).then(answers => {
 
- 	  console.log("Updating the inventory...\n");
+ 	  console.log("\nUpdating the inventory...");
 
  	  var id = itemArr.indexOf(answers.item);
 
- 	 	// newQuantity = objArr[id-1].stock_quantity - ans.amount;
-
-  var query = connection.query(
-    "UPDATE products SET ? WHERE ?",
-    [
-      {
-        stock_quantity: objArr[id].stock_quantity + parseInt(answers.num)
-      },
-      {
-        item_id: parseInt(id) + 1
-      }
-    ],
-    function(err, res) {
-      console.log(res.affectedRows + " products updated!\n");
-      promptManager();
-    }
-  );
-
-  // logs the actual query being run
-  console.log(query.sql);
-
-});
-
- }
+		var query = connection.query(
+  	"UPDATE products SET ? WHERE ?",
+  	[
+    	{
+      	stock_quantity: objArr[id].stock_quantity + parseInt(answers.num)
+    	},
+    	{
+      	item_id: parseInt(id) + 1
+    	}
+  	],
+  	function(err, res) {
+    	console.log("All Set!");
+    	promptManager();
+  	});
+	});
+}
 
 function createProduct() {
 	inquirer.prompt([
@@ -211,17 +190,38 @@ function createProduct() {
 		type: "input",
 		message: "Please enter the price",
 		name: "price",
+
+		validate: function (input) {
+
+   		// if input is not a number
+   		if (isNaN(input)) {
+   			return " Please enter a valid number";
+   		}
+      
+      // otherwise
+      return true;
+    	}
 	},
 	{
 		type: "input",
 		message: "Please enter the quantity in stock",
 		name: "quantity",
+
+		validate: function (input) {
+
+   	// if input is not a number
+   	if (isNaN(input)) {
+   		return " Please enter a valid number";
+   	}
+     // otherwise
+     return true;
+    }
 	},
 
-		]).then(input => {
+	]).then(input => {
 
-     console.log("Inserting a new product...\n");
-  var query = connection.query(
+    console.log("\n Inserting a new product...");
+  	var query = connection.query(
     "INSERT INTO products SET ?",
     {
     	product_name:  input.item,
@@ -231,16 +231,10 @@ function createProduct() {
     },
     function(err, res) {
       console.log(res.affectedRows + " product inserted!\n");
-      // Call updateProduct AFTER the INSERT completes
 
-      // logs the actual query being run
-  console.log(query.sql);
+      // Call promptManager AFTER the INSERT completes
+  		promptManager();
+    });
 
-  promptManager();
-    }
-  );
-
-  
 	});
- 
 }
