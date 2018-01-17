@@ -39,6 +39,8 @@ skills you learned this week. The app will take in orders from customers and dep
 
 ### Manager View
 
+![manager view](videos/manager.gif "Description goes here")
+
 * The user types `node bamazonCustomer.js` in the terminal/bash window to run the app.
 
 * Running this application will:
