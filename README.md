@@ -17,6 +17,8 @@ skills you learned this week. The app will take in orders from customers and dep
 
 ### Customer View
 
+![customer view](videos/bamazon.mp4 "Description goes here")
+
 * The user types `node bamazonCustomer.js` in the terminal/bash window to run the app.
 
 * The app will display the items for sale from the corresponding MySQL database (bamazon_db)
