@@ -2,22 +2,18 @@
 
 ### Overview
 
-This activity is a command-line Amazon-like storefront using node and MySQL.
+This activity is a command-line Amazon-like storefront using node and MySQL. This app will take in orders from customers and deplete stock from the store's inventory.
 
 ### Node Packages
 
-This app uses mysql, inquirer and cli-table node packages (see package.JSON)
-
-## Instructions
-
-skills you learned this week. The app will take in orders from customers and deplete stock from the store's inventory. As a bonus task, you can program your app to track product sales across your store's departments and then provide a summary of the highest-grossing departments in the store.
+This app uses mysql, inquirer, and cli-table node packages (see package.JSON)
 
 
 ## Instructions
 
 ### Customer View
 
-![customer view](videos/bamazon.mp4 "Description goes here")
+![customer view](videos/customer.gif)
 
 * The user types `node bamazonCustomer.js` in the terminal/bash window to run the app.
 
@@ -39,23 +35,23 @@ skills you learned this week. The app will take in orders from customers and dep
 
 ### Manager View
 
-![manager view](videos/manager.gif "Description goes here")
+![manager view](videos/manager.gif)
 
-* The user types `node bamazonCustomer.js` in the terminal/bash window to run the app.
+* The user types `node bamazonManager.js` in the terminal/bash window to run the app.
 
 * Running this application will:
 
   * List a set of menu options:
 
-    * View Products for Sale
+    * `View Products for Sale`
     
-    * View Low Inventory
+    * `View Low Inventory`
     
-    * Add to Inventory
+    * `Add to Inventory`
     
-    * Add New Product
+    * `Add New Product`
     
-    * Exit
+    * `Exit`
 
   * If a manager selects `View Products for Sale`, the app will display a table of every available item: the item IDs, names, prices, and quantities.
 
